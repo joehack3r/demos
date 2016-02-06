@@ -47,7 +47,11 @@
             },
             {
                 "ParameterKey" : "HostedZone",
-                "ParameterValue" : "joehack3r.com"
+                "ParameterValue" : "mydomain.com"
+            },
+            {
+                "ParameterKey" : "OwnerTag",
+                "ParameterValue" : "me@mydomain.com"
             },
             {
                 "ParameterKey" : "KeyName",
