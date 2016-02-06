@@ -32,7 +32,7 @@
             },
             {
                 "ParameterKey" : "HostedZone",
-                "ParameterValue" : "joehack3r.com"
+                "ParameterValue" : "mydomain.com"
             },
             {
                 "ParameterKey" : "JenkinsDnsAlias",
@@ -41,6 +41,10 @@
             {
                 "ParameterKey" : "JenkinsHomeEbsVolume",
                 "ParameterValue" : "vol-9491374b"
+            },
+            {
+                "ParameterKey" : "OwnerTag",
+                "ParameterValue" : "me@mydomain.com"
             },
             {
                 "ParameterKey" : "KeyName",
