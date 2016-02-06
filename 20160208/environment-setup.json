@@ -6,7 +6,7 @@
             {
                 "VPC-Dev" : {
                     "Properties" : {
-                        "Path" : "file:~/demos/20160208/parameters/vpc_two_public_subnets.json"
+                        "Path" : "file:~/demos/20160208/parameters/vpc.json"
                     }
                 }
             },
