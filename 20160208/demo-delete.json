@@ -1,0 +1,9 @@
+{
+    "Name": "Delete the demo stacks",
+
+    "StacksToDelete" : [
+        {
+            "MyApp-Demo-WebApp" : []
+        }
+    ]
+}

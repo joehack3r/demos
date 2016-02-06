@@ -1,0 +1,14 @@
+[
+    {
+        "ParameterKey" : "PredefinedElbSecurityPolicy",
+        "ParameterValue" : "ELBSecurityPolicy-2015-05"
+    },
+    {
+        "ParameterKey" : "Latest",
+        "ParameterValue" : "ELBSecurityPolicy-2015-05"
+    },
+    {
+        "ParameterKey" : "Vulnerable",
+        "ParameterValue" : "ELBSecurityPolicy-2014-01"
+    }
+]

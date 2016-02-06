@@ -1,0 +1,92 @@
+{
+    "Name": "cloudformation-crud definition file for development environment",
+
+    "Parameters": {
+        "Files" : [
+            {
+                "VPC-Dev" : {
+                    "Properties" : {
+                        "Path" : "file:~/demos/20160208/parameters/vpc_two_public_subnets.json"
+                    }
+                }
+            },
+            {
+                "US-East-1-AMIs" : {
+                    "Properties" : {
+                        "Path" : "file:~/demos/20160208/parameters/us-east-1-amis.json"
+                    }
+                }
+            },
+            {
+                "ConfidentialValues" : {
+                    "Properties" : {
+                        "Path" : "file:~/demos/20160208/parameters/confidential.json"
+                    }
+                }
+            }
+        ],
+        "KeyValuePairs" : [
+            {
+                "ParameterKey" : "Environment",
+                "ParameterValue" : "demo"
+            },
+            {
+                "ParameterKey" : "HostedZone",
+                "ParameterValue" : "joehack3r.com"
+            },
+            {
+                "ParameterKey" : "JenkinsDnsAlias",
+                "ParameterValue" : "jenkins-demo"
+            },
+            {
+                "ParameterKey" : "JenkinsHomeEbsVolume",
+                "ParameterValue" : "vol-9491374b"
+            },
+            {
+                "ParameterKey" : "KeyName",
+                "ParameterValue" : "demo"
+            },
+            {
+                "ParameterKey" : "PredefinedElbSecurityPolicy",
+                "ParameterValue" : "ELBSecurityPolicy-2015-05"
+            }
+        ]
+    },
+
+    "StacksToCreateOrUpdate" : [
+        {
+            "VPC-Demo" : {
+                "Properties" : {
+                    "Template" : "file:~/demos/20160208/templates/vpc_two_public_subnets.json",
+                    "AddOutputsToParameters" : true
+                }
+            }
+        },
+        {
+            "VPC-Demo-SecurityGroups" : {
+                "Properties" : {
+                    "Template" : "file:~/demos/20160208/templates/vpc_security_groups.json",
+                    "AddOutputsToParameters" : true
+                }
+            }
+        },
+        {
+            "VPC-Demo-SshBastionHost" : {
+                "Properties" : {
+                    "Template" : "file:~/demos/20160208/templates/vpc_ssh_bastion_host.json",
+                    "AddOutputsToParameters" : true,
+                    "Capabilities" : ["CAPABILITY_IAM"]
+                }
+            }
+        },
+        {
+            "Jenkins-Demo" : {
+                "Properties" : {
+                    "Template" : "file:~/demos/20160208/templates/jenkins.json",
+                    "AddOutputsToParameters" : true,
+                    "Capabilities" : ["CAPABILITY_IAM"]
+                }
+            }
+        }
+    ]
+}

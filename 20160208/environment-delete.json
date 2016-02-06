@@ -1,0 +1,18 @@
+{
+    "Name": "Delete the environment stacks",
+
+    "StacksToDelete" : [
+        {
+            "Jenkins-Demo" : []
+        },
+        {
+            "VPC-Demo-SshBastionHost" : []
+        },
+        {
+            "VPC-Demo-SecurityGroups" : []
+        },
+        {
+            "VPC-Demo" : []
+        }
+    ]
+}

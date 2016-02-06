@@ -1,0 +1,74 @@
+{
+    "Name": "cloudformation-crud definition file for development environment",
+
+    "Parameters": {
+        "Files" : [
+            {
+                "VPC-Dev" : {
+                    "Properties" : {
+                        "Path" : "file:~/demos/20160208/parameters/vpc_two_public_subnets.json"
+                    }
+                }
+            },
+            {
+                "US-East-1-AMIs" : {
+                    "Properties" : {
+                        "Path" : "file:~/demos/20160208/parameters/us-east-1-amis.json"
+                    }
+                }
+            },
+            {
+                "Elb-Security-Settings" : {
+                    "Properties" : {
+                        "Path" : "file:~/demos/20160208/parameters/elb-security-settings.json"
+                    }
+                }
+            },
+            {
+                "ConfidentialValues" : {
+                    "Properties" : {
+                        "Path" : "file:~/demos/20160208/parameters/confidential.json"
+                    }
+                }
+            }
+        ],
+        "ExistingStacks" : [
+            {
+                "VPC-Demo" : ""
+            },
+            {
+                "VPC-Demo-SecurityGroups" : ""
+            }
+        ],
+        "KeyValuePairs" : [
+            {
+                "ParameterKey" : "Environment",
+                "ParameterValue" : "demo"
+            },
+            {
+                "ParameterKey" : "HostedZone",
+                "ParameterValue" : "joehack3r.com"
+            },
+            {
+                "ParameterKey" : "KeyName",
+                "ParameterValue" : "demo"
+            },
+            {
+                "ParameterKey" : "WebAppDnsAlias",
+                "ParameterValue" : "demo"
+            }
+        ]
+    },
+
+    "StacksToCreateOrUpdate" : [
+        {
+            "MyApp-Demo-WebApp" : {
+                "Properties" : {
+                    "Template" : "file:~/demos/20160208/templates/webapp.json",
+                    "AddOutputsToParameters" : true,
+                    "Capabilities" : ["CAPABILITY_IAM"]
+                }
+            }
+        }
+    ]
+}
