@@ -1,9 +1,5 @@
 [
     {
-        "ParameterKey" : "OwnerTag",
-        "ParameterValue" : "joe@joehack3r.com"
-    },
-    {
         "ParameterKey" : "VpcCidr",
         "ParameterValue" : "10.1.0.0/16"
     },
