@@ -58,5 +58,4 @@ These instructions may need to be adapted to your own specific needs.
 
 9. Cleanup
 
-  `./cloudformation-crud.py demo-delete.json`
-  `./cloudformation-crud.py environment-delete.json`
+  `./cloudformation-crud.py demo-delete.json; ./cloudformation-crud.py environment-delete.json`
