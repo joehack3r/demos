@@ -46,11 +46,9 @@ These instructions may need to be adapted to your own specific needs.
 				./cloudformation-crud.py demo.json
 
 		* Create WebHook in GitHub:
-	    * Repository --> Settings --> Webhooks & services --> Webhooks
-			  * Payload URL:
-			  	https://jenkins-demo.mydomain.com/github-webhook/
-		* Which events would you like to trigger this webhook?
-			* Just the push event
+	    * Repository --> Settings --> Webhooks & services --> Services --> Add service --> Jenkins (GitHub plugin)
+			  * Jenkins hook url:
+			  	https://username:password@jenkins-demo.mydomain.com/github-webhook/
 
 7. Wait for stack. The first build of the MyApp-Demo-WebApp stack may take ~10 minutes.
 
