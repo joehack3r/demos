@@ -3,8 +3,10 @@
   Global CloudTrail bucket with log file validation enabled.
 */
 
+data "aws_caller_identity" "current" {}
+
 variable "cloudtrail-bucket-name" {
-  # default = "my-globablly-unique-s3-bucket-name-for-tf"
+  default = "my-globablly-unique-s3-bucket-name-for-tf"
 }
 
 resource "aws_s3_bucket" "awslogs-tf" {
@@ -41,7 +43,7 @@ resource "aws_s3_bucket_policy" "cloudtrail-bucket-policy" {
                 "s3:PutObject"
             ],
             "Resource": [
-                "arn:aws:s3:::${aws_s3_bucket.awslogs-tf.id}/*"
+                "arn:aws:s3:::${aws_s3_bucket.awslogs-tf.id}/AWSLogs/${data.aws_caller_identity.current.account_id}/*"
             ],
             "Condition": {
                 "StringEquals": {
