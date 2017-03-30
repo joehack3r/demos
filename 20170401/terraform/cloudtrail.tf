@@ -3,8 +3,12 @@
   Global CloudTrail bucket with log file validation enabled.
 */
 
+variable "cloudtrail-bucket-name" {
+  # default = "my-globablly-unique-s3-bucket-name-for-tf"
+}
+
 resource "aws_s3_bucket" "awslogs-tf" {
-  bucket        = "my-globablly-unique-s3-bucket-name-for-tf"
+  bucket        = "${var.cloudtrail-bucket-name}"
   force_destroy = true
 }
 
@@ -53,9 +57,10 @@ EOF
 resource "aws_cloudtrail" "cloudtrail-tf" {
   name                          = "cloudtrail-via-terraform"
   s3_bucket_name                = "${aws_s3_bucket.awslogs-tf.id}"
-  is_multi_region_trail         = true
   enable_log_file_validation    = true
+  enable_logging                = true
   include_global_service_events = true
-
+  is_multi_region_trail         = true
+  
   depends_on = ["aws_s3_bucket_policy.cloudtrail-bucket-policy"]
 }

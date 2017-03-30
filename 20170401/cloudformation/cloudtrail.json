@@ -1,0 +1,77 @@
+{
+    "AWSTemplateFormatVersion" : "2010-09-09",
+
+    "Description" : "Terraform template to create a S3 bucket, assign CloudTrail policy to it, and create Global CloudTrail bucket with log file validation enabled.",
+
+    "Parameters" : {
+
+        "CloudtrailBucketName" : {
+            "Description" : "S3 bucket to create for storing CloudTrail logs.",
+            "Type" : "String",
+            "Default" : "my-globablly-unique-s3-bucket-name-for-cloudformation"
+        }
+    },
+
+    "Resources" : {
+
+        "CloudTrailBucket" : {
+            "Type" : "AWS::S3::Bucket",
+            "Properties" : {
+                "BucketName" : { "Ref" : "CloudtrailBucketName" }
+            }
+        },
+
+        "CloudTrailBucketPolicy" : {
+            "Type" : "AWS::S3::BucketPolicy",
+            "Properties" : {
+                "Bucket" : {"Ref" : "CloudTrailBucket"},
+                "PolicyDocument": {
+                    "Statement":[{
+                        "Sid": "AWSCloudTrailAclCheck",
+                        "Effect":"Allow",
+                        "Principal": {
+                            "Service": "cloudtrail.amazonaws.com"
+                        },
+                        "Action": [
+                            "s3:GetBucketAcl"
+                        ],
+                        "Resource": [
+                            { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "CloudTrailBucket" } ]]}
+                        ]
+                    },
+                    {
+                        "Sid": "AWSCloudTrailWrite",
+                        "Effect":"Allow",
+                        "Principal": {
+                            "Service": "cloudtrail.amazonaws.com"
+                        },
+                        "Action": [
+                            "s3:PutObject"
+                        ],
+                        "Resource": [
+                            { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref":"CloudTrailBucket"}, "/AWSLogs/", {"Ref":"AWS::AccountId"}, "/*"]]},
+                        ],
+                        "Condition": {
+                            "StringEquals": {
+                                "s3:x-amz-acl": "bucket-owner-full-control"
+                            }
+                        }
+                    }]
+                }
+            }
+        },
+
+        "CloudtrailViaCloudformation" : {
+            "DependsOn" : ["CloudTrailBucketPolicy"],
+            "Type" : "AWS::CloudTrail::Trail",
+            "Properties" : {
+                "S3BucketName" : {"Ref": "CloudTrailBucket"},
+                "EnableLogFileValidation" : true,
+                "IsLogging" : true,
+                "IncludeGlobalServiceEvents" : true,
+                "IsMultiRegionTrail" : true
+            }
+        }
+
+    }
+}
