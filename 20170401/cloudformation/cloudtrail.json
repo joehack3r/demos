@@ -16,6 +16,7 @@
 
         "CloudTrailBucket" : {
             "Type" : "AWS::S3::Bucket",
+            "DeletionPolicy": "Delete",
             "Properties" : {
                 "BucketName" : { "Ref" : "CloudtrailBucketName" }
             }
@@ -49,7 +50,7 @@
                             "s3:PutObject"
                         ],
                         "Resource": [
-                            { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref":"CloudTrailBucket"}, "/AWSLogs/", {"Ref":"AWS::AccountId"}, "/*"]]},
+                            { "Fn::Join" : ["", ["arn:aws:s3:::", {"Ref":"CloudTrailBucket"}, "/AWSLogs/", {"Ref":"AWS::AccountId"}, "/*"]]}
                         ],
                         "Condition": {
                             "StringEquals": {

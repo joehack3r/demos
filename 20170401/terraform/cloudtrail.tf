@@ -6,7 +6,9 @@
 data "aws_caller_identity" "current" {}
 
 variable "cloudtrail-bucket-name" {
-  default = "my-globablly-unique-s3-bucket-name-for-tf"
+  description = "S3 bucket to create for storing CloudTrail logs."
+  type        = "string"
+  default     = "my-globablly-unique-s3-bucket-name-for-tf"
 }
 
 resource "aws_s3_bucket" "awslogs-tf" {
@@ -16,6 +18,7 @@ resource "aws_s3_bucket" "awslogs-tf" {
 
 resource "aws_s3_bucket_policy" "cloudtrail-bucket-policy" {
   bucket = "${aws_s3_bucket.awslogs-tf.id}"
+
   policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -57,12 +60,12 @@ EOF
 }
 
 resource "aws_cloudtrail" "cloudtrail-tf" {
+  depends_on = ["aws_s3_bucket_policy.cloudtrail-bucket-policy"]
+
   name                          = "cloudtrail-via-terraform"
   s3_bucket_name                = "${aws_s3_bucket.awslogs-tf.id}"
   enable_log_file_validation    = true
   enable_logging                = true
   include_global_service_events = true
   is_multi_region_trail         = true
-  
-  depends_on = ["aws_s3_bucket_policy.cloudtrail-bucket-policy"]
 }
